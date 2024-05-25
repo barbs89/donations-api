@@ -16,5 +16,20 @@ describe('Routes', () => {
 		});
 	});
 
+	describe('GET /profiles/:id', () => {
+		test('should return a single profile ', async () => {
+			const profileId = "2ad19172-9683-407d-9732-8397d58ddcb2"
+			const res = await request(app).get(`/profiles/${profileId}`)
+			expect(res.statusCode).toBe(200);
+		});
+	});
+
+	describe('GET /profiles/:id/donations', () => {
+		test('should return a single profile\'s donations', async () => {
+			const res = await request(app).get('/profiles')
+			expect(res.statusCode).toBe(200);
+		});
+	});
+
 });
 
