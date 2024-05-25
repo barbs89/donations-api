@@ -9,5 +9,12 @@ describe('Routes', () => {
 		});
 	});
 
+	describe('GET /profiles', () => {
+		test('should return profiles ', async () => {
+			const res = await request(app).get('/profiles')
+			expect(res.statusCode).toBe(200);
+		});
+	});
+
 });
 
