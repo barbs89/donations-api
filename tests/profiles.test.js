@@ -1,9 +1,11 @@
+const { isValidProfile } = require('../lib/profileUtils');
 const { isUUIDv4 } = require('../lib/validators');
-const { fetchProfiles } = require('../lib/utils');
+const { fetchProfiles, fetchDonations } = require('../lib/utils');
 
 beforeAll(async () => {
-  // Fetch profiles
+  // Fetch profiles and donations
   profiles = await fetchProfiles();
+  donations = await fetchDonations();
 
 });
 
@@ -47,4 +49,41 @@ describe('Profiles UUID Validation', () => {
 			expect(profile.parentId === null || isUUIDv4(profile.parentId)).toBe(true);
 		}
   });
+});
+
+describe('isValidProfile function', () => {
+  test('should return true for a valid profile object', () => {
+    const validProfile = {
+      id: '550e8400-e29b-41d4-a716-446655440000',
+      name: 'John Doe',
+      total: 100,
+      parentId: null,
+      currency: 'USD'
+    };
+    expect(isValidProfile(validProfile)).toBe(true);
+  });
+
+  test('should return false if profile object is null', () => {
+    expect(isValidProfile(null)).toBe(false);
+  });
+
+  test('should return false if profile object is undefined', () => {
+    expect(isValidProfile(undefined)).toBe(false);
+  });
+
+  test('should return false if profile object is not an object', () => {
+    expect(isValidProfile('not an object')).toBe(false);
+  });
+
+  test('should return false if total is not a number', () => {
+    const invalidTotalProfile = {
+      id: '550e8400-e29b-41d4-a716-446655440000',
+      name: 'John Doe',
+      total: 'invalid-total',
+      parentId: null,
+      currency: 'USD'
+    };
+    expect(isValidProfile(invalidTotalProfile)).toBe(false);
+  });
+
 });

@@ -5,8 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "start": "nodemon server/index.js",
-    "test": "jest tests/index.test.js --no-cache  --forceExit && jest tests/profiles.test.js --no-cache  --forceExit",
-		"clear_jest": "jest --clearCache"
+    "test": "jest tests/index.test.js --no-cache  --forceExit && jest tests/profiles.test.js --no-cache  --forceExit && jest tests/donations.test.js --no-cache  --forceExit",
+    "clear_jest": "jest --clearCache"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/barbs89/raisely-backend-test#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "dotenv": "^16.4.5",

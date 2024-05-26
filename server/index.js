@@ -5,13 +5,12 @@ const PORT = process.env.PORT || 3000;
 const { profiles } = require('../tests/seed/seedTestProfiles')
 const { donations } = require('../tests/seed/seedTestDonations')
 
-const { getProfileById, findDonationsByProfileId, fetchProfiles } = require('../lib/utils');
+const { getProfileById, receivedDonation, findDonationsByProfileId, fetchProfiles } = require('../lib/utils');
 
 // get initial donations array
 const donationsArray = donations;
 
 app.use(express.json())
-
 /**
  * Home page
  */
@@ -34,7 +33,7 @@ app.get("/profiles", async (req, res) => {
 /**
  * Fetch a single profile
  */
- app.get("/profiles/:id", (req, res) => {
+app.get("/profiles/:id", (req, res) => {
 	try {
 		const foundProfile = getProfileById(req.params.id, profiles);
 		if (foundProfile) {
@@ -49,7 +48,7 @@ app.get("/profiles", async (req, res) => {
 
 /**
  * Fetch a single profiles donations
-*/
+ */
 app.get("/profiles/:id/donations", (req, res) => {
 	const profileId = req.params.id;
 
@@ -74,8 +73,34 @@ app.get("/profiles/:id/donations", (req, res) => {
   }
 });
 
+/**
+ * Submit a new donation to the profile with the given ID
+ */
+app.post('/profiles/:id/donations', (req, res) => {
+  try {
+    const newDonation = receivedDonation(req.body);
+    if (newDonation) {
+      donationsArray.push(newDonation);
+      res.status(201).json(newDonation);
+    } else {
+      res.status(400).send({ error: 'Invalid donation' });
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+// /**
+//  * Submit a new donation to the campaign
+//  */
+//  app.post("/donations", (req, res) => {
+//   // Your implementation here
+// });
+
+
+
 app.listen(PORT, () => {
-	console.log(`Raisely example app listening at http://localhost:${PORT}`);
+	console.log(`Example app listening at http://localhost:${PORT}`);
 });
 
 module.exports = app;
