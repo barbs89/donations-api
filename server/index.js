@@ -5,7 +5,8 @@ const PORT = process.env.PORT || 3000;
 const { profiles } = require('../tests/seed/seedTestProfiles')
 const { donations } = require('../tests/seed/seedTestDonations')
 
-const { getProfileById, addDonations, receivedDonation, initializeProfileTotals, findDonationsByProfileId, fetchProfiles } = require('../lib/utils');
+const { getProfileById } = require('../lib/profileUtils');
+const { addDonations, receivedDonation, initializeProfileTotals, findDonationsByProfileId, fetchProfiles } = require('../lib/utils');
 
 // get initial donations array
 const profilesArray = profiles;
@@ -66,14 +67,13 @@ app.get("/profiles/:id/donations", (req, res) => {
 
     // Retrieve donations associated with the profile ID
     const profileDonations = findDonationsByProfileId(profileId, donationsArray);
-    if (!profileDonations) {
+    if (!profileDonations || profileDonations.length === 0) {
       return res.status(404).send({ error: 'No donations found for this profile' });
     }
 
     // Send the retrieved donations
     res.json(profileDonations);
   } catch (error) {
-    // Handle errors (e.g., invalid UUID format)
     res.status(400).send({ error: 'Invalid UUID format' });
   }
 });
