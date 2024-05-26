@@ -5,9 +5,11 @@ const PORT = process.env.PORT || 3000;
 const { profiles } = require('../tests/seed/seedTestProfiles')
 const { donations } = require('../tests/seed/seedTestDonations')
 
-const { getProfileById, receivedDonation, findDonationsByProfileId, fetchProfiles } = require('../lib/utils');
+const { getProfileById, addDonations, receivedDonation, initializeProfileTotals, findDonationsByProfileId, fetchProfiles } = require('../lib/utils');
 
 // get initial donations array
+const profilesArray = profiles;
+initializeProfileTotals(profiles, donations)
 const donationsArray = donations;
 
 app.use(express.json())
@@ -23,8 +25,8 @@ app.get("/", (req, res) => {
  */
 app.get("/profiles", async (req, res) => {
   try {
-    const profiles = await fetchProfiles();
-    res.json(profiles);
+    const getProfiles = await fetchProfiles(profilesArray);
+    res.json(getProfiles);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -34,15 +36,17 @@ app.get("/profiles", async (req, res) => {
  * Fetch a single profile
  */
 app.get("/profiles/:id", (req, res) => {
+	const profileId = req.params.id;
+
 	try {
-		const foundProfile = getProfileById(req.params.id, profiles);
+		const foundProfile = getProfileById(profileId, profilesArray);
 		if (foundProfile) {
 			res.json(foundProfile);
 		} else {
 			res.status(404).send({ error: 'Profile not found' });
 		}
 	} catch (error) {
-		res.status(400).send({ error: 'Invalid UUID format' }); // Bad request due to invalid UUID format
+		res.status(400).send({ error: 'Invalid UUID format' });
 	}
 });
 
@@ -54,7 +58,8 @@ app.get("/profiles/:id/donations", (req, res) => {
 
   try {
     // Retrieve the profile by ID
-    const foundProfile = getProfileById(profileId, profiles);
+    const foundProfile = getProfileById(profileId, profilesArray);
+
     if (!foundProfile) {
       return res.status(404).send({ error: 'Profile not found' });
     }
@@ -77,17 +82,18 @@ app.get("/profiles/:id/donations", (req, res) => {
  * Submit a new donation to the profile with the given ID
  */
 app.post('/profiles/:id/donations', (req, res) => {
-  try {
-    const newDonation = receivedDonation(req.body);
-    if (newDonation) {
-      donationsArray.push(newDonation);
-      res.status(201).json(newDonation);
-    } else {
-      res.status(400).send({ error: 'Invalid donation' });
-    }
-  } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
-  }
+	const newDonation = receivedDonation(req.body);
+
+	try {
+			const result = addDonations(newDonation, profilesArray, donationsArray);
+			res.status(201).json({
+					message: 'Donation created',
+					donation: result.donation,
+					profile: result.profile
+			});
+	} catch (error) {
+			res.status(400).json({ error: error.message });
+	}
 });
 
 // /**
