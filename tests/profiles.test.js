@@ -6,7 +6,6 @@ const { fetchProfiles } = require('../lib/utils');
 beforeAll(async () => {
   // Fetch profiles
   profilesArray = await fetchProfiles(profiles);
-
 });
 
 describe('Profiles Data', () => {

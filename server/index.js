@@ -86,27 +86,28 @@ app.post('/profiles/:id/donations', (req, res) => {
 
 	try {
 			const result = addDonations(newDonation, profilesArray, donationsArray);
-			res.status(201).json({
-					message: 'Donation created',
-					donation: result.donation,
-					profile: result.profile
-			});
+			res.status(201).json(result.donation);
 	} catch (error) {
 			res.status(400).json({ error: error.message });
 	}
 });
 
-// /**
-//  * Submit a new donation to the campaign
-//  */
-//  app.post("/donations", (req, res) => {
-//   // Your implementation here
-// });
+/**
+ * Submit a new donation to the campaign
+ */
+ app.post("/donations", (req, res) => {
+  const newDonation = receivedDonation(req.body);
 
-
+	try {
+			const result = addDonations(newDonation, profilesArray, donationsArray);
+			res.status(201).json(result.donation);
+	} catch (error) {
+			res.status(400).json({ error: error.message });
+	}
+});
 
 app.listen(PORT, () => {
-	console.log(`Example app listening at http://localhost:${PORT}`);
+	console.log(`Raisely example app listening at http://localhost:${PORT}`);
 });
 
 module.exports = app;

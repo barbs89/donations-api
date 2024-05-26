@@ -50,7 +50,7 @@ describe('Routes', () => {
 			const validDonation = {
 				donorName: 'John Doe',
 				amount: 100,
-				profileId: '2ad19172-9683-407d-9732-8397d58ddcb2',
+				profileId: profileId,
 				currency: 'AUD'
 			};
 	
@@ -64,7 +64,7 @@ describe('Routes', () => {
 				id: mockUUID,
 				donorName: 'John Doe',
 				amount: 100,
-				profileId: '2ad19172-9683-407d-9732-8397d58ddcb2',
+				profileId: profileId,
 				currency: 'AUD'
 			};
 
@@ -88,6 +88,54 @@ describe('Routes', () => {
 				.expect(400);
 		});
 	});
-	
 
+	describe('POST /donations', () => {
+		const campaignId = "78afca18-8162-4ed5-9a7b-212b98c9ec87"
+		const mockUUID = 'f5a87bb1-8381-4ecf-b5c9-07fbc300766a';
+
+		test('should create a new donation and respond with status 201 and the updated donations list', async () => {
+			uuidv4.mockReturnValue(mockUUID);
+	
+			const validDonation = {
+				donorName: 'John Doe',
+				amount: 100,
+				profileId: campaignId,
+				currency: 'AUD'
+			};
+	
+			const response = await request(app)
+				.post('/donations')
+				.send(validDonation)
+				.expect('Content-Type', /json/)
+				.expect(201);
+
+			const expectedDonation = {
+				id: mockUUID,
+				donorName: 'John Doe',
+				amount: 100,
+				profileId: campaignId,
+				currency: 'AUD'
+			};
+
+			// Compare JSON strings for deep equality
+			expect(JSON.stringify(response.body)).toContain(JSON.stringify(expectedDonation))
+	
+			expect(uuidv4).toHaveBeenCalled();
+		});
+	
+		test('should respond with status 400 if the donation is invalid', async () => {
+			const invalidDonation = {
+				donorName: '',
+				amount: 100,
+				profileId: 'invalid-profile-id',
+				currency: 'AUD'
+			};
+	
+			await request(app)
+				.post('/donations')
+				.send(invalidDonation)
+				.expect(400);
+		});
+	});
+	
 });

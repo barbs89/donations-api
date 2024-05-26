@@ -8,10 +8,8 @@ jest.mock('uuid', () => ({
 }));
 
 beforeAll(async () => {
-  // Fetch profiles and donations
-  profiles = await fetchProfiles();
+  // Fetch donations
   donations = await fetchDonations();
-
 });
 
 describe('Donations Data', () => {
