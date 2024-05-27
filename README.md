@@ -110,7 +110,12 @@ Latest donations will be visible in the browser after the page is refreshed.
 ---
 The application has been uploaded to REPLIT and can be accessed using this link - [**@barbs89/raisely-backend-test**](https://replit.com/@barbs89/raisely-backend-test).
 
-To run the application I recommend using the **REPLIT Dev url** below:
+To start the server, click the green `RUN` button.
+
+![REPLIT Run button](./assets/replitrun_button.png)
+
+Once running, you can make curl requests in the `SHELL` tab, or
+ you can use **REPLIT Dev url** and make requests in your terminal:
 ```
 https://1a814ae3-193c-46d4-af50-278e8dce4d68-00-a91mzu0ipquc.janeway.replit.dev/
 ```
