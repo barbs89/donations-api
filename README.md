@@ -6,7 +6,7 @@ A simplified version of the Raisely API for managing profiles and donations.
 
 ## Requirements
 ---
-Before the application can be run, ensure **Node.js** has been installed on your computer by running the following command on your terminal:
+Before the application can be run ensure **Node.js** has been installed on your computer by running the following command in your terminal:
 ```
 $ node -v
 ```
@@ -15,27 +15,25 @@ $ node -v
 $ v20.13.1
 ```
 
-If **Node** is not installed on your computer, you can follow the instructions outlined [here](https://nodejs.org/en/download/package-manager).
+If **Node** is not installed on your computer you can follow the instructions outlined [here](https://nodejs.org/en/download/package-manager).
 
-## Run application locally
+## Running the application locally
 ---
-To run the application locally, you will need to clone the repository from GitHub onto your computer to run the application.
-
-Follow the steps below to get the application up and running.
-1. On your terminal, enter the following command to clone the repository:
+Follow the steps below to run the application locally.
+1. Clone the repository by entering the following command in to your terminal:
 
 ```
 $ git clone https://github.com/barbs89/raisely-backend-test.git
 ```
-2. Next, install the necessary node packages the application depends on:
+2. Install the required node packages:
 ```
 $ npm install
 ```
-3. Start the server locally
+3. Start the server
 ```
 $ npm start
 ```
-3. Visit `http://localhost:8080` on your browser.
+4. Visit `http://localhost:8080` in your browser.
 ```
 [nodemon] 3.1.0
 [nodemon] to restart at any time, enter `rs`
@@ -47,15 +45,15 @@ Raisely example app listening at http://localhost:8080
 ```
 ### Testing
 ---
-This application uses the [Jest](https://jestjs.io/docs/getting-started) testing framework. It contains three test files, `index.test.js`, `profiles.test.js` and `donations.test.js`. 
+This application uses the [Jest](https://jestjs.io/docs/getting-started) testing framework. It contains three test files; `index.test.js`, `profiles.test.js` and `donations.test.js`. 
 
 Each test serves a different purpose that contributes to the overall quality, maintainability, and scalability of the application.
 
-To begin testing, run the following command on your terminal:
+To begin testing run the following command in your terminal:
 ```
 $ npm test
 ```
-If you wish to test specific files, such as `index.test.js`, you can pass one positional argument:
+To test specific files such as `index.test.js`, you can pass one positional argument:
 ```
 $ npm test index.test.js 
 ```
@@ -96,7 +94,7 @@ Force exiting Jest: Have you considered using `--detectOpenHandles` to detect as
 ```
 ### Making POST requests
 ---
-You can make `POST` request in your terminal by running a [cURL](https://curl.se/docs/) command such as the example below.
+`POST` requests can be made in your terminal by running a [cURL](https://curl.se/docs/) command as shown in the example below.
 
 Example `POST` Request to local environment:
 
@@ -104,22 +102,22 @@ Example `POST` Request to local environment:
 $ curl -X POST http://localhost:8080/profiles/<profileId>/donations -H 'Content-Type: application/json' -d '{ "donorName": "Andrew Smith", "amount": 100, "profileId": "2ad19172-9683-407d-9732-8397d58ddcb2", "currency": "AUD"}'
 ```
 
-When a successful request is made, you will be able to see the donations made in the `/donations` end point when a page is refreshed.
+After a successful request is submitted you will be able to see the donations made in the `/donations` end point.
 
-## Run application online
+Latest donations will be visible in the browser after the page is refreshed.
+
+## Running the application online
 ---
-This repository has been cloned and added to a software development & deployment platform - REPLIT. This   and is available to view on [**REPLIT.io**](https://replit.com) for quick access and ease of use.
+The application has been uploaded to REPLIT and can be accessed using this link - [**@barbs89/raisely-backend-test**](https://replit.com/@barbs89/raisely-backend-test).
 
-You can find the repository at [**@barbs89/raisely-backend-test**](https://replit.com/@barbs89/raisely-backend-test).
-
-If you wish to test the application, I recommend using the **REPLIT Dev url** below:
+To run the application I recommend using the **REPLIT Dev url** below:
 ```
 https://1a814ae3-193c-46d4-af50-278e8dce4d68-00-a91mzu0ipquc.janeway.replit.dev/
 ```
 
 ### Making POST requests
 ---
-You can also make `POST` request to the REPLIT Dev URL; just replace the localhost url with the dev url.
+`POST` requests to the application in REPLIT can be made by replacing the localhost url with the dev url as shown in the example below.
 
 Example `POST` Request to REPLIT Dev URL:
 ```bash
