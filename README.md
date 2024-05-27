@@ -1,11 +1,10 @@
 # Raisely Technical Assessment - Backend Engineer
 
 ## Overview
+---
 A simplified version of the Raisely API for managing profiles and donations.
 
-## Instructions
----
-### Requirements
+## Requirements
 ---
 Before the application can be run, ensure **Node.js** has been installed on your computer by running the following command on your terminal:
 ```
