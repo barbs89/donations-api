@@ -86,6 +86,7 @@ app.post('/profiles/:id/donations', (req, res) => {
 
 	try {
 			const result = addDonations(newDonation, profilesArray, donationsArray);
+			// charge card here
 			res.status(201).json(result.donation);
 	} catch (error) {
 			res.status(400).json({ error: error.message });
