@@ -1,4 +1,4 @@
-# Raisely Technical Assessment - Backend Engineer
+# Raisely API - Manage profiles and Donations
 
 ## Overview
 ---
